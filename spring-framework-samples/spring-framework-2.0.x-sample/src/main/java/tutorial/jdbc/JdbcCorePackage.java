@@ -1,7 +1,9 @@
 package tutorial.jdbc;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
+import org.springframework.jdbc.support.incrementer.MySQLMaxValueIncrementer;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -126,6 +128,37 @@ public class JdbcCorePackage {
         }
     }
 
+    public void insertWithSequence() throws DataAccessException {
+        int[] types = new int[] { Types.INTEGER, Types.VARCHAR };
+        String[] species = new String[] {"Cat", "Dog", "Horse"};
+        JdbcTemplate tpl = new JdbcTemplate(ds);
+        // First clean up the table
+        tpl.update("delete from species");
+        // Read keys by bunches of 2 values
+        MySQLMaxValueIncrementer incr = new MySQLMaxValueIncrementer(ds, "species_seq", "seq");
+        incr.setCacheSize(2);
+
+        // Insert 3 records
+        for (int i = 0; i < 3; i++) {
+            Object[] params = new Object[] { new Integer(incr.nextIntValue()), species[i] };
+            PreparedStatementCreator psc =
+                    new PreparedStatementCreatorFactory("insert into species values(?, ?)", types).
+                            newPreparedStatementCreator(params);
+            tpl.update(psc);
+            System.out.println("Inserted species with id = " + params[0]);
+        }
+
+        // List all rows
+        tpl.query("select * from species",
+                new RowCallbackHandler() {
+                    public void processRow(ResultSet rs) throws SQLException {
+                        System.out.println("Species id = " + rs.getInt(1) +
+                                ", species name = " + rs.getString(2));
+                    }
+                }
+        );
+    }
+
     public static void main(String[] args) {
 
         JdbcCorePackage demo = new JdbcCorePackage();
@@ -133,7 +166,8 @@ public class JdbcCorePackage {
 //        demo.staticInsert();
 //        demo.dynamicInsert();
 //        demo.dynamicInsertUsingPSFactory();
-        demo.readAllRows();
+//        demo.readAllRows();
+        demo.insertWithSequence();
 
     }
 
