@@ -2,7 +2,9 @@ package tutorial.beans;
 
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
+import tutorial.beans.propertyeditors.OwnerEditor;
 
+import java.beans.PropertyEditorManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -59,10 +61,38 @@ public class BeanWrapperTest {
         }
     }
 
+    public void editorTest(){
+        PropertyEditorManager.registerEditor(List.class, OwnerEditor.class);
+        Owner isabelle = new Owner();
+        BeanWrapper bw = new BeanWrapperImpl(isabelle);
+
+        try{
+            bw.setPropertyValue("name", "Isabelle");
+            bw.setPropertyValue("pets", "Bodo/4/Cat,Pixel/11/Dog,Raphael/6/Cat");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        System.out.println("Property editor : " + isabelle.getName() + "’s pets are: ");
+        ListIterator iter = isabelle.getPets().listIterator();
+        while (iter.hasNext()) {
+//            System.out.println("iter.next(): "+iter.next());
+            IPet pet = (IPet)iter.next();
+            ISpecies sp = pet.getSpecies();
+            System.out.println(pet.getName() + " of species " + sp.getName());
+        }
+    }
+
     public static void main(String[] args) {
 
         BeanWrapperTest demo = new BeanWrapperTest();
-        demo.simpleTest();
+//        demo.simpleTest();
+        demo.editorTest();
+
+        /*OwnerEditor editor = new OwnerEditor();
+        editor.setAsText("Bodo/4/Cat,Pixel/11/Dog,Raphael/6/Cat");
+        Object editorValue = editor.getValue();
+        System.out.println("editorValue: "+editorValue);*/
 
     }
 
