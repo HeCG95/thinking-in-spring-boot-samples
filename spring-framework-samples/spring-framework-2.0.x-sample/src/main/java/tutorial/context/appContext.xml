@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+    <bean name="cat" scope="singleton" class="tutorial.beans.Species">
+        <property name="name" value="Cat"/>
+    </bean>
+    <bean name="dog" scope="singleton" class="tutorial.beans.Species">
+        <property name="name" value="Dog"/>
+    </bean>
+    <bean name="isabelle" scope="singleton" class="tutorial.beans.Owner">
+        <property name="name" value="Isabelle"/>
+        <property name="pets" value="Bodo/4/Cat,Pixel/11/Dog,Raphael/6/Cat"/>
+    </bean>
+</beans>
