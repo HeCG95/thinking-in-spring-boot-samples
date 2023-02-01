@@ -7,17 +7,20 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
           class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basename" value="messages"/>
     </bean>
-    <bean name="bodo" scope="singleton" class="tutorial.beans.Pet">
+<!--    <bean name="bodo" scope="singleton" class="tutorial.beans.Pet">-->
+    <bean name="bodo" scope="singleton" class="tutorial.context.Pet">
         <property name="name" value="Bodo"/>
         <property name="age" value="4"/>
         <property name="species" ref="cat"/>
     </bean>
-    <bean name="pixel" scope="singleton" class="tutorial.beans.Pet">
+<!--    <bean name="pixel" scope="singleton" class="tutorial.beans.Pet">-->
+    <bean name="pixel" scope="singleton" class="tutorial.context.Pet">
         <property name="name" value="Pixel"/>
         <property name="age" value="11"/>
         <property name="species" ref="dog"/>
     </bean>
-    <bean name="raphael" scope="singleton" class="tutorial.beans.Pet">
+<!--    <bean name="raphael" scope="singleton" class="tutorial.beans.Pet">-->
+    <bean name="raphael" scope="singleton" class="tutorial.context.Pet">
         <property name="name" value="Raphael"/>
         <property name="age" value="6"/>
         <property name="species" ref="cat"/>

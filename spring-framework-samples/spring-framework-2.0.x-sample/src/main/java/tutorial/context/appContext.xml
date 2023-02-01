@@ -9,7 +9,8 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean name="dog" scope="singleton" class="tutorial.beans.Species">
         <property name="name" value="Dog"/>
     </bean>
-    <bean name="isabelle" scope="singleton" class="tutorial.beans.Owner">
+<!--    <bean name="isabelle" scope="singleton" class="tutorial.beans.Owner">-->
+    <bean name="isabelle" scope="singleton" class="tutorial.context.Owner">
         <property name="name" value="Isabelle"/>
         <property name="pets" value="Bodo/4/Cat,Pixel/11/Dog,Raphael/6/Cat"/>
     </bean>

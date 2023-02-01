@@ -83,12 +83,20 @@ public class ContextTest {
                 arguments, Locale.getDefault()));
     }
 
+    public void testEvents() {
+        Owner isabelle = (Owner)ctx.getBean("isabelle");
+        if (null != isabelle) {
+            isabelle.feedPets();
+        }
+    }
+
     public static void main(String[] args) {
 
         ContextTest demo = new ContextTest();
 //        demo.listBeans();
 //        demo.testSharedObject();
-        demo.testMessages();
+//        demo.testMessages();
+        demo.testEvents();
 
     }
 
